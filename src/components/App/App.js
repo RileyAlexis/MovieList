@@ -7,7 +7,7 @@ import MovieDetail from '../MovieDetail/MovieDetail';
 
 function App() {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch({ type: 'FETCH_MOVIES' });
 }, []);
@@ -19,7 +19,7 @@ function App() {
         <Route path="/" exact>
           <MovieList />
         </Route>
-        <Route path="/detail" component={MovieDetail} />
+        <Route path="/detail/:id" component={MovieDetail} />
         {/* Details page */}
 
         {/* Add Movie page */}

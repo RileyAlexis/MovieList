@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './MovieList.css'
 
 function MovieList() {
     const movies = useSelector(store => store.movies);
+    const history = useHistory();
 
     const handleDetail = (id) => {
-        console.log(id);
-
+        history.push(`/detail/${id}`);
     }
 
 
