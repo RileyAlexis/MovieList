@@ -4,10 +4,15 @@ const pool = require('../modules/pool')
 
 router.get('/', (req, res) => {
 
-  const query = `SELECT * FROM movies ORDER BY "title" ASC`;
+  const query = `SELECT "movie_id" AS "id", "title", "poster", "description", STRING_AGG("genres"."name", ', ') AS "genre_name"
+  FROM "movies_genres"
+  LEFT JOIN "movies" ON "movies"."id" = "movies_genres"."movie_id"
+  LEFT JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
+  GROUP BY "movies"."title", "movies"."id", "movies_genres"."movie_id";`;
   pool.query(query)
     .then( result => {
       res.send(result.rows);
+      console.log(result.rows);
     })
     .catch(err => {
       console.log('ERROR: Get all movies', err);

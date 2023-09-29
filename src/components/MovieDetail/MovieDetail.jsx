@@ -10,8 +10,8 @@ function MovieDetail() {
     let movieDetails = [];
     movieDetails = movies.filter((obj) => obj.id == id)
 
-    console.log('Movie Details', movieDetails);
-    console.log('Id from path', id);
+    console.log('Movies List', movies);
+    console.log('Movies Detail', movieDetails);
     return (
         <div className="moveDetailBox">
                 <Typography variant="h5">{movieDetails[0].title}</Typography>

@@ -10,6 +10,7 @@ function MovieList() {
     const handleDetail = (id) => {
         history.push(`/detail/${id}`);
     }
+    console.log('Movies', movies);
 
 
     return (
