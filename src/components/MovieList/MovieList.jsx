@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './MovieList.css'
 
 function MovieList() {
-
-    const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
 
-    useEffect(() => {
-        dispatch({ type: 'FETCH_MOVIES' });
-    }, []);
+    const handleDetail = (id) => {
+        console.log(id);
+
+    }
+
 
     return (
         <main>
@@ -17,7 +17,7 @@ function MovieList() {
             <section className="movies">
                 {movies.map(movie => {
                     return (
-                        <div key={movie.id} >
+                        <div className="movie-title-box" key={movie.id} onClick={() => handleDetail(movie.id)}>
                             <h3>{movie.title}</h3>
                             <img src={movie.poster} alt={movie.title}/>
                         </div>
