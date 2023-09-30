@@ -1,24 +1,33 @@
-.App {
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.headerBox {
+  grid-column: 1 / span 5;
+  background-color: rgba(193, 139, 139, 0.5);
+  box-shadow: -1px -1px 3px rgba(105, 83, 83, 0.5);
+  min-height: 9vh;
   text-align: center;
+  vertical-align: middle;
+  padding-top: 5px;
 }
 
+.movielistBox {
+  grid-column: 1 / span 3;
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+}
+.movieImageBox {
+  margin: 20px;
+  cursor: pointer;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.movieSearchBox {
+  color:black;
+  padding-top: 17px;
 }

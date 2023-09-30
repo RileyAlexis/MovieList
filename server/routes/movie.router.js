@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
+const axios = require('axios');
+const dotenv = require('dotenv').config();
 
 router.get('/', (req, res) => {
 
@@ -12,7 +14,6 @@ router.get('/', (req, res) => {
   pool.query(query)
     .then( result => {
       res.send(result.rows);
-      console.log(result.rows);
     })
     .catch(err => {
       console.log('ERROR: Get all movies', err);
@@ -22,7 +23,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie
   const insertMovieQuery = `
   INSERT INTO "movies" ("title", "poster", "description")
@@ -57,5 +57,40 @@ router.post('/', (req, res) => {
     res.sendStatus(500)
   })
 })
+
+router.post('/OMDB', (req, res) => {
+  const userString = req.body.searchStr;
+  const searchStr = userString.replace(/[^a-zA-Z0-9]+/g, '+');
+  const apiKey = process.env.OMDB_KEY;
+  const OMDBURL = `http://www.omdbapi.com/?s=${searchStr}&apikey=${apiKey}`;
+  console.log(OMDBURL);
+
+  axios.get(OMDBURL)
+    .then((response) => {
+      res.send(response.data);
+      console.log(response.data);
+    }).catch((error) => {
+      console.error(`Error making OMDB API request ${error}`);
+      res.sendStatus(500);
+    })
+})
+
+router.post('/movieDB', (req, res) => {
+  const userString = req.body.searchStr;
+  const searchStr = userString.replace(/[^a-zA-Z0-9]+/g, '+');
+  const apikey = process.env.movieDb;
+  const movieDBURL = `https://api.themoviedb.org/3/search/movie?query=${searchStr}&api_key=${apikey}`
+
+  console.log(movieDBURL);
+  axios.get(movieDBURL)
+    .then((response) => {
+      res.send(response.data.results);
+      console.log(response.data.results);
+    }).catch((error) => {
+      console.error(`Error making MovieDB API request ${error}`);
+      res.sendStatus(500);
+    })
+})
+
 
 module.exports = router;
