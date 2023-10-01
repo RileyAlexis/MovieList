@@ -13,12 +13,22 @@ function MovieDetail() {
     console.log('Movies List', movies);
     console.log('Movies Detail', movieDetails);
     return (
-        <>
-                <Typography variant="h5">{movieDetails[0].title}</Typography>
-                <img src={movieDetails[0].poster} />
-                <Typography variant="body">{movieDetails[0].description}</Typography>
-                <Typography variant="h6">{JSON.stringify(movieDetails[0].genre_name)}</Typography>
-        </>
+        <div className="movieDetailSubBox">
+           <div className="movie-detail-poster">
+           <img width="250" src={movieDetails[0].poster} />
+           </div> 
+            
+    <div className="movie-detail-titleBox">
+        <Typography variant="h5">{movieDetails[0].title}</Typography>
+        </div>
+        <div className="movie-detail-description">
+        <Typography variant="body">{movieDetails[0].description}</Typography>
+        </div>
+        <div className="movie-detail-genres">
+        <Typography variant="h6">{JSON.stringify(movieDetails[0].genre_name)}</Typography>
+        </div>
+    
+    </div>
     )
 }
 
