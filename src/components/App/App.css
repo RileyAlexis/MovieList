@@ -31,3 +31,18 @@ body {
   color:black;
   padding-top: 17px;
 }
+
+.searchingBox {
+  border: 1px solid black;
+  box-shadow: 1px 1px 3px rgba(193, 139, 139, 0.5);
+  padding: 15px;
+  line-height: 1.2;
+}
+
+.searchResultsBox {
+  grid-column: 1 / span 2;
+}
+
+.footerBox {
+  grid-column: 1 / span 5;
+}

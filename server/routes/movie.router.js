@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
 });
 
-router.post('/', (req, res) => {
+router.put('/addNewMovie', (req, res) => {
   // RETURNING "id" will give us back the id of the created movie
   const insertMovieQuery = `
   INSERT INTO "movies" ("title", "poster", "description")
@@ -42,7 +42,8 @@ router.post('/', (req, res) => {
       VALUES  ($1, $2);
       `
       // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
-      pool.query(insertMovieGenreQuery, [createdMovieId, req.body.genre_id]).then(result => {
+      const set_genre = 1; //Place holder until genres can be matched to API
+      pool.query(insertMovieGenreQuery, [createdMovieId, set_genre]).then(result => {
         //Now that both are done, send back success!
         res.sendStatus(201);
       }).catch(err => {
@@ -85,12 +86,36 @@ router.post('/movieDB', (req, res) => {
   axios.get(movieDBURL)
     .then((response) => {
       res.send(response.data.results);
-      console.log(response.data.results);
     }).catch((error) => {
       console.error(`Error making MovieDB API request ${error}`);
       res.sendStatus(500);
     })
 })
 
+router.post('/movieDBDetails', (req, res) => {
+  const movieId = req.body.movieId;
+  const apikey = process.env.movieDb;
+  const movieDBURL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apikey}`
+  axios.get(movieDBURL)
+    .then((response) => {
+      res.send(response.data);
+    }).catch((error) => {
+      console.error(`Error making MovieDB API request ${error}`);
+      res.sendStatus(500);
+    })}
+  );
+
+router.get('/movieDBGetGenres', (req, res) => {
+  const apikey = process.env.movieDb;
+  const movieDBURL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apikey}&language=en-US`
+  console.log(movieDBURL);
+  axios.get(movieDBURL)
+  .then((response) => {
+    res.send(response.data);
+  }).catch((error) => {
+    console.error(`Error making MovieDB API request ${error}`);
+    res.sendStatus(500);
+  })}
+);
 
 module.exports = router;

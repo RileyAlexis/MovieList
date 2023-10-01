@@ -14,6 +14,9 @@ CREATE TABLE "genres" (
   "name" VARCHAR(80) NOT NULL
 );
 
+ALTER TABLE "genres"
+ADD COLUMN "IMDB_genreID" INT UNIQUE
+
 
 -- JUNCTION TABLE
 -- Movies can have multiple genres and each genre can be applied to multiple movies
