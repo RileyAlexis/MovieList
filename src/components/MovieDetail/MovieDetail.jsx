@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import { Typography } from "@mui/material";
@@ -8,20 +9,12 @@ function MovieDetail() {
     const movies = useSelector(store => store.movies);
     const genres = useSelector(store => store.genres);
     const { id } = useParams();
-    const dispatch = useDispatch();
     let movieDetails = [];
     movieDetails = movies.filter((obj) => obj.id == id)
 
-    
-
-    const fetchData = () => {
-        dispatch({type: 'FETCH_MOVIES'});
-
-    }
-
-    window.onbeforeunload = function () {
-        
-    }
+    useEffect(() => {
+       window.scrollTo(0,0);
+    }, []);
 
     return (        
         <div className="movieDetailSubBox">
