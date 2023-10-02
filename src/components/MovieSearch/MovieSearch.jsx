@@ -24,7 +24,7 @@ function MovieSearch() {
             }
             axios.post('/api/movie/movieDB/', dataObj)
                 .then((response) => {
-                    dispatch({type: 'SET_RESULTS', payload: response.data});
+                    dispatch({type: 'searchResults/setSearchResults', payload: response.data});
                     history.push('/results');
                 }).catch((error) => {
                     console.error(error);
