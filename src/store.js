@@ -1,5 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { configureStore, createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
@@ -7,13 +6,6 @@ import { takeEvery, put, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 import logger from 'redux-logger';
-
-// const persistConfig = {
-//     key: 'root',
-//     storage,
-// };
-
-// const persistedReducer = persistReducer(persistConfig, movies)
 
 
 // Create the rootSaga generator function
@@ -67,8 +59,8 @@ const movies = createSlice({
     reducers: {
         setAllMovies: (state, action) => {
                 return action.payload;
-            },
-        },
+            }
+        }
 })
 
 
@@ -87,29 +79,35 @@ const genreIDs = createSlice({
     initialState: [],
     reducer: {
         setGenreIDs: (state, action) => {
-            switch (action.type) {
-                case 'SET_GENRES': return action.payload;
-                default:
-                    return state;
-            }
+            return action.payload;
         }
     }
 })
 
-const rootReducer = {
+const rootReducer = combineReducers({
     movies: movies.reducer,
     searchResults: searchResults.reducer,
-    genreIDs: genreIDs.reducer,
+    genreIDs: genreIDs.reducer
+});
+
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    blacklist: ['searchResults'],
 };
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Create one store that all components can use
 const storeInstance = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(sagaMiddleware, logger),
 });
 
 
+const persistor = persistStore(storeInstance);
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
 
-export default storeInstance;
+export { storeInstance, persistor };

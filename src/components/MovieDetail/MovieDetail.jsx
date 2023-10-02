@@ -19,7 +19,9 @@ function MovieDetail() {
 
     }
 
-    movieDetails[0] === undefined ? fetchData() : ""; 
+    window.onbeforeunload = function () {
+        
+    }
 
     return (        
         <div className="movieDetailSubBox">
