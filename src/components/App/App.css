@@ -10,7 +10,7 @@ body {
 
 .headerBox {
   grid-column: 1 / span 5;
-  background-color: rgba(193, 139, 139, 0.5);
+  background: linear-gradient(rgb(105,90,90), rgb(140, 90, 90), rgb(180, 120, 90));
   box-shadow: -1px -1px 3px rgba(105, 83, 83, 0.5);
   min-height: 9vh;
   text-align: center;

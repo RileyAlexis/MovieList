@@ -27,7 +27,7 @@ const updateGenres = () => {
   return (
     <div className="container">
       <div className="headerBox">
-      <h1>The Movies Saga!</h1>
+      <h1>Movie List</h1>
       {/* <Button onClick={updateGenres}>Update Genre Data</Button> */}
       <Link href="/" underline="none">My Movies </Link>
 
