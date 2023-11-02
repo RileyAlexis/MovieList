@@ -13,7 +13,8 @@ function* rootSaga() {
     yield all ([
         takeEvery('FETCH_MOVIES', fetchAllMovies),
         takeEvery('FETCH_GENRES', fetchGenres),
-        takeEvery('ADD_MOVIE', addMovie)
+        takeEvery('ADD_MOVIE', addMovie),
+        takeEvery('DELETE_MOVIE', deleteMovie)
     ])
 }
 
@@ -46,6 +47,15 @@ function* fetchGenres() {
             console.log('Next part', genres);
     } catch {
         console.log('Error updating genre data');
+    }
+}
+
+function* deleteMovie(action) {
+    console.log('Delete Move', action.payload);
+    try {
+        const deleteId = yield axios.post(`api/movie/delete`, { id: action.payload });
+    } catch (error) {
+        console.error(error);
     }
 }
 

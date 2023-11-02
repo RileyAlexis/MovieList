@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import swal from 'sweetalert';
 
 function MovieDetail() {
 
@@ -10,11 +10,28 @@ function MovieDetail() {
     const genres = useSelector(store => store.genres);
     const { id } = useParams();
     let movieDetails = [];
-    movieDetails = movies.filter((obj) => obj.id == id)
+    movieDetails = movies.filter((obj) => obj.id == id);
+    const dispatch = useDispatch();
 
     useEffect(() => {
        window.scrollTo(0,0);
     }, []);
+
+    const deleteMovie = () => {
+        swal({
+            title: `Confirm delete ${movieDetails[0].title}`,
+            text: "This will remove the title from your database. It may be readded by searching",
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+            closeOnClickOutside: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                dispatch({type: 'DELETE_MOVIE', payload: movieDetails[0].id});
+            } 
+        }) 
+    }
 
     return (        
         <div className="movieDetailSubBox">
@@ -27,10 +44,16 @@ function MovieDetail() {
         </div>
         <div className="movie-detail-description">
         <Typography variant="body">{movieDetails[0].description}</Typography>
-        </div>
+        
         <div className="movie-detail-genres">
-        <Typography variant="h6">{JSON.stringify(movieDetails[0].genre_name)}</Typography>
+            <br /><br />
+        <Typography variant="h6">Genres: {JSON.stringify(movieDetails[0].genre_name)}</Typography>
         </div>
+        <div className="buttonBox">
+            <Button onClick={deleteMovie}>Delete</Button>
+        </div>
+        </div>
+        
     
     </div>
     )

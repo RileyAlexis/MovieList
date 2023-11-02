@@ -33,8 +33,9 @@ body {
 }
 
 .movieDetailBox {
-  grid-column: 1 / span 4;
+  grid-column: 2 / span 3;
   width: 450;
+  max-height: 600px;
   margin: 15px;
 }
 
@@ -48,6 +49,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr, 0.5fr);
   grid-template-rows: repeat(3, 1fr);
+  max-height: 600px;
 }
 
 .movie-detail-titleBox {
@@ -75,5 +77,5 @@ body {
 }
 
 .footerBox {
-  grid-column: 1 / span 5;
+  grid-column: 2 / span 5;
 }

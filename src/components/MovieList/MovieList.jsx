@@ -8,6 +8,8 @@ import './MovieList.css'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { IconButton } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 function MovieList() {
     const movies = useSelector(store => store.movies);
@@ -30,12 +32,14 @@ function MovieList() {
                             key={movie.id}>
                             <img src=
                                 {`${movie.poster}?w=248&fit=crop&auto=format`}
-                                alt={movie.title} />
+                                alt={movie.title}
+                                loading="lazy" />
                         <ImageListItemBar
                             title={movie.title}
                             subtitle={movie.genre_name}
-                            position="below" />
-                        
+                            actionIcon={<InfoIcon />}
+                            // position="below" 
+                            />   
                         </ImageListItem>
 
                 ))}

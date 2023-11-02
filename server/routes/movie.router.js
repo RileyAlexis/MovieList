@@ -118,4 +118,29 @@ router.get('/movieDBGetGenres', (req, res) => {
   })}
 );
 
+router.post('/delete', (req, res) => {
+  console.log(req.body.id);
+  let queryString = 
+        `DELETE FROM "movies_genres" WHERE "movies_genres"."id" = $1;`;
+  pool.query(queryString, [req.body.id])
+  .then((response) => {
+
+            let queryString2 = `DELETE FROM "movies" WHERE "movies"."id" = $1;`
+            pool.query(queryString2, [req.body.id])
+            .then((response) => {
+              res.sendStatus(201);
+            }).catch((error) => {
+              console.error(error);
+              res.sendStatus(500);
+            })
+            
+  }).catch((error) => {
+    console.error(error);
+    res.sendStatus(500);
+  })
+
+
+
+})
+
 module.exports = router;
